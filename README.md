@@ -81,8 +81,8 @@ JWT_REFRESH_EXPIRES=30d
 EXPRESS_SESSION_SECRET=your_session_secret
 
 # Admin credentials (will be auto-created)
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASS=admin123
+ADMIN_EMAIL=admin@payu.com
+ADMIN_PASS=Admin@123
 ```
 
 4. Start the backend server:

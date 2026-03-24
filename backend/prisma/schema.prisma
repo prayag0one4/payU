@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  account      Account?
+  sentTx       Transaction[] @relation("SenderTx")
+  receivedTx   Transaction[] @relation("ReceiverTx")
+
+  @@index([email])
+}
+
+model Account {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  balance   Decimal  @default(0) @db.Decimal(18, 2)
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Transaction {
+  id         String          @id @default(uuid())
+  senderId   String?
+  receiverId String?
+  amount     Decimal         @db.Decimal(18, 2)
+  type       TransactionType
+  status     TxStatus        @default(PENDING)
+  note       String?
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  createdAt  DateTime        @default(now())
+
+  sender   User? @relation("SenderTx",   fields: [senderId],   references: [id])
+  receiver User? @relation("ReceiverTx", fields: [receiverId], references: [id])
+
+  @@index([senderId])
+  @@index([receiverId])
+  @@index([createdAt])
+  @@index([status])
+}
+
+enum TransactionType {
+  ADD_MONEY
+  TRANSFER
+}
+
+enum TxStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}

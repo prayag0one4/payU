@@ -1,0 +1,29 @@
+# 🔐 Env files
+.env
+.env.*
+!.env.example
+
+# 📦 Node modules (covers both frontend & backend)
+node_modules/
+**/node_modules/
+
+# 🏗️ Build outputs
+dist/
+build/
+**/dist/
+**/build/
+
+# 🧪 Prisma
+.prisma/
+prisma/migrations/
+
+# 🗂️ Logs
+*.log
+
+# 🖥️ OS
+.DS_Store
+Thumbs.db
+
+# 🧰 IDE
+.vscode/
+.idea/

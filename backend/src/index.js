@@ -8,7 +8,6 @@ const { errorHandler } = require('./middleware/errorHandler');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const walletRoutes = require('./routes/walletRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
 
 const app = express();
@@ -25,8 +24,7 @@ app.use(cors({
 // Global rate limiter
 app.use(globalLimiter);
 
-// Body parsers — order matters: payment webhook needs raw body
-app.use('/api/payment/webhook', express.raw({ type: 'application/json' }));
+// Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -37,7 +35,6 @@ app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/wallet', walletRoutes);
-app.use('/api/payment', paymentRoutes);
 app.use('/api/transactions', transactionRoutes);
 
 // 404 handler

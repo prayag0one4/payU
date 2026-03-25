@@ -40,8 +40,6 @@ model Transaction {
   type       TransactionType
   status     TxStatus        @default(PENDING)
   note       String?
-  razorpayOrderId   String?
-  razorpayPaymentId String?
   createdAt  DateTime        @default(now())
 
   sender   User? @relation("SenderTx",   fields: [senderId],   references: [id])

@@ -63,16 +63,16 @@ const Transactions = () => {
     return (
         <div className="animate-fade-in">
             <div className="mb-6">
-                <h1 className="text-3xl font-bold text-white">Transactions</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">Transactions</h1>
                 <p className="text-gray-400 mt-1">Your complete payment history</p>
             </div>
 
             {/* Filters */}
             <div className="card mb-6">
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
                     <div>
                         <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider">Type</p>
-                        <div className="flex gap-2">
+                        <div className="flex flex-wrap gap-2">
                             {FILTERS.map(({ label, value }) => (
                                 <FilterBtn
                                     key={value}
@@ -85,7 +85,7 @@ const Transactions = () => {
                     </div>
                     <div>
                         <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider">Status</p>
-                        <div className="flex gap-2">
+                        <div className="flex flex-wrap gap-2">
                             {STATUS_FILTERS.map(({ label, value }) => (
                                 <FilterBtn
                                     key={value}
@@ -132,7 +132,7 @@ const Transactions = () => {
                         return (
                             <div
                                 key={tx.id}
-                                className="flex items-center gap-4 p-4 border-b border-gray-800 last:border-0 hover:bg-gray-800/40 transition-colors"
+                                className="flex flex-col items-start gap-3 p-4 border-b border-gray-800 last:border-0 hover:bg-gray-800/40 transition-colors sm:flex-row sm:items-center sm:gap-4"
                             >
                                 <div className={`w-10 h-10 flex-shrink-0 rounded-full flex items-center justify-center text-lg ${isCredit ? 'bg-green-900/60' : 'bg-red-900/60'}`}>
                                     {tx.type === 'ADD_MONEY' ? '💰' : isCredit ? '📥' : '📤'}
@@ -150,7 +150,7 @@ const Transactions = () => {
                                     <p className="text-xs text-gray-600 mt-0.5">{formatDate(tx.createdAt)}</p>
                                 </div>
 
-                                <div className="text-right flex-shrink-0">
+                                <div className="text-left sm:text-right flex-shrink-0 w-full sm:w-auto">
                                     <p className={`text-sm font-bold ${isCredit ? 'text-green-400' : 'text-red-400'}`}>
                                         {isCredit ? '+' : '-'}₹{parseFloat(tx.amount).toFixed(2)}
                                     </p>
@@ -166,11 +166,11 @@ const Transactions = () => {
 
             {/* Pagination */}
             {pagination.totalPages > 1 && (
-                <div className="flex items-center justify-between mt-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mt-4">
                     <p className="text-sm text-gray-500">
                         Page {pagination.page} of {pagination.totalPages}
                     </p>
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-2 gap-2 sm:flex sm:gap-2 w-full sm:w-auto">
                         <button
                             id="prev-page"
                             onClick={() => fetchTransactions(pagination.page - 1)}

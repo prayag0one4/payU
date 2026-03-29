@@ -36,16 +36,16 @@ const MockPaymentModal = ({ amount, onSuccess, onClose }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-            <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl animate-slide-up">
+            <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl animate-slide-up max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+                <div className="flex items-start gap-2 justify-between px-4 sm:px-6 py-4 border-b border-gray-800">
                     <div>
                         <p className="text-xs text-gray-400 uppercase tracking-wider">Secure Payment</p>
                         <p className="text-xl font-bold text-white mt-0.5">
                             ₹{parseFloat(amount).toFixed(2)}
                         </p>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap justify-end">
                         <span className="text-xs bg-green-900/60 text-green-400 border border-green-800 rounded-full px-2.5 py-0.5">🔒 Safe & Secure</span>
                         <button
                             onClick={onClose}
@@ -57,7 +57,7 @@ const MockPaymentModal = ({ amount, onSuccess, onClose }) => {
                 </div>
 
                 {/* Card form */}
-                <form onSubmit={handlePay} className="p-6 space-y-4">
+                <form onSubmit={handlePay} className="p-4 sm:p-6 space-y-4">
                     {/* Card number */}
                     <div>
                         <label className="label">Card Number</label>
@@ -187,7 +187,7 @@ const AddMoney = () => {
 
             <div className="max-w-lg animate-fade-in">
                 <div className="mb-6">
-                    <h1 className="text-3xl font-bold text-white">Add Money</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white">Add Money</h1>
                     <p className="text-gray-400 mt-1">Top up your PayU wallet instantly</p>
                 </div>
 
@@ -196,7 +196,7 @@ const AddMoney = () => {
                         {/* Quick amount selection */}
                         <div>
                             <label className="label">Quick amounts</label>
-                            <div className="grid grid-cols-3 gap-2">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                                 {AMOUNTS.map((a) => (
                                     <button
                                         key={a}

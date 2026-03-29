@@ -5,11 +5,11 @@ import { useAuth } from '../context/AuthContext'
 import api from '../api/axios'
 
 const StatCard = ({ label, value, icon, color }) => (
-    <div className="card flex items-center gap-4">
+    <div className="card flex items-center gap-3 sm:gap-4">
         <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${color}`}>{icon}</div>
         <div>
             <p className="text-sm text-gray-400">{label}</p>
-            <p className="text-2xl font-bold text-white mt-0.5">{value}</p>
+            <p className="text-xl sm:text-2xl font-bold text-white mt-0.5">{value}</p>
         </div>
     </div>
 )
@@ -56,7 +56,7 @@ const Dashboard = () => {
         <div className="space-y-6 animate-fade-in">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-bold text-white">Good {getGreeting()}, {user?.name?.split(' ')[0]} 👋</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">Good {getGreeting()}, {user?.name?.split(' ')[0]} 👋</h1>
                 <p className="text-gray-400 mt-1">Here's your wallet overview</p>
             </div>
 
@@ -65,14 +65,14 @@ const Dashboard = () => {
                 <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4" />
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4" />
                 <p className="text-brand-200 text-sm font-medium relative">Total Balance</p>
-                <p className="text-4xl font-bold text-white mt-2 relative">{formatBalance(user?.balance)}</p>
+                <p className="text-3xl sm:text-4xl font-bold text-white mt-2 relative break-all">{formatBalance(user?.balance)}</p>
                 <p className="text-brand-300 text-xs mt-3 relative">Updated just now</p>
             </div>
 
             {/* Quick actions */}
             <div>
                 <h2 className="text-lg font-semibold text-white mb-3">Quick Actions</h2>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                     <QuickAction to="/add-money" icon="➕" label="Add Money" desc="Top up wallet" color="bg-green-900/60" />
                     <QuickAction to="/send" icon="📤" label="Send Money" desc="Transfer to anyone" color="bg-blue-900/60" />
                     <QuickAction to="/transactions" icon="📋" label="History" desc="View all activity" color="bg-purple-900/60" />
@@ -108,7 +108,7 @@ const Dashboard = () => {
                         recentTx.map((tx) => {
                             const isCredit = tx.receiverId === user?.id
                             return (
-                                <div key={tx.id} className="flex items-center gap-4 p-4 border-b border-gray-800 last:border-0 hover:bg-gray-800/40 transition-colors">
+                                <div key={tx.id} className="flex flex-col items-start gap-2 p-4 border-b border-gray-800 last:border-0 hover:bg-gray-800/40 transition-colors sm:flex-row sm:items-center sm:gap-4">
                                     <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${isCredit ? 'bg-green-900/60' : 'bg-red-900/60'}`}>
                                         {tx.type === 'ADD_MONEY' ? '💰' : isCredit ? '📥' : '📤'}
                                     </div>
@@ -118,7 +118,7 @@ const Dashboard = () => {
                                         </p>
                                         <p className="text-xs text-gray-500 mt-0.5">{formatDate(tx.createdAt)}</p>
                                     </div>
-                                    <div className="text-right">
+                                    <div className="w-full sm:w-auto text-left sm:text-right">
                                         <p className={`text-sm font-bold ${isCredit ? 'text-green-400' : 'text-red-400'}`}>
                                             {isCredit ? '+' : '-'}₹{parseFloat(tx.amount).toFixed(2)}
                                         </p>

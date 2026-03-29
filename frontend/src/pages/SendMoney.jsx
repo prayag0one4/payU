@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import api from '../api/axios'
 import { useAuth } from '../context/AuthContext'
@@ -7,7 +7,6 @@ const SendMoney = () => {
     const { user, refreshUser } = useAuth()
     const [form, setForm] = useState({ recipientEmail: '', amount: '', note: '' })
     const [loading, setLoading] = useState(false)
-    const [preview, setPreview] = useState(null)
     const [step, setStep] = useState('form') // 'form' | 'confirm'
 
     const handlePreview = (e) => {
@@ -43,16 +42,17 @@ const SendMoney = () => {
     }
 
     const balance = parseFloat(user?.balance ?? 0)
+    const remainingBalance = useMemo(() => balance - parseFloat(form.amount || 0), [balance, form.amount])
 
     return (
         <div className="max-w-lg animate-fade-in">
             <div className="mb-6">
-                <h1 className="text-3xl font-bold text-white">Send Money</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">Send Money</h1>
                 <p className="text-gray-400 mt-1">Transfer funds to any PayU user instantly</p>
             </div>
 
             {/* Balance display */}
-            <div className="card mb-6 flex items-center gap-4">
+            <div className="card mb-6 flex items-center gap-3 sm:gap-4">
                 <div className="w-10 h-10 bg-brand-900/60 rounded-xl flex items-center justify-center text-xl">💳</div>
                 <div>
                     <p className="text-sm text-gray-400">Available balance</p>
@@ -123,21 +123,21 @@ const SendMoney = () => {
                             { label: 'To', value: form.recipientEmail },
                             { label: 'Amount', value: `₹${parseFloat(form.amount).toFixed(2)}` },
                             ...(form.note ? [{ label: 'Note', value: form.note }] : []),
-                            { label: 'Remaining balance', value: `₹${(balance - parseFloat(form.amount)).toFixed(2)}` },
+                            { label: 'Remaining balance', value: `₹${remainingBalance.toFixed(2)}` },
                         ].map(({ label, value }) => (
-                            <div key={label} className="flex justify-between items-center px-4 py-3">
+                            <div key={label} className="flex justify-between items-center gap-3 px-4 py-3">
                                 <span className="text-gray-400 text-sm">{label}</span>
-                                <span className="text-white font-medium text-sm">{value}</span>
+                                <span className="text-white font-medium text-sm text-right break-all">{value}</span>
                             </div>
                         ))}
                     </div>
 
-                    <div className="flex gap-3">
-                        <button onClick={() => setStep('form')} className="btn-secondary flex-1">← Back</button>
+                    <div className="flex flex-col-reverse sm:flex-row gap-3">
+                        <button onClick={() => setStep('form')} className="btn-secondary w-full sm:flex-1">← Back</button>
                         <button
                             id="confirm-transfer-btn"
                             onClick={handleTransfer}
-                            className="btn-primary flex-1"
+                            className="btn-primary w-full sm:flex-1"
                             disabled={loading}
                         >
                             {loading ? <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : null}

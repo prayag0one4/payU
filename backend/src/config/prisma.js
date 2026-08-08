@@ -15,7 +15,7 @@ try {
     console.log('Database connected');
   }
 } catch (error) {
-  console.error('Database connection failed:', error.message);
+  console.error('Database connection failed:', error.stack || error);
 }
 
 module.exports = prisma;

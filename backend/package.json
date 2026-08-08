@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "build": "prisma generate",
-    "migrate": "npx prisma migrate dev",
-    "generate": "npx prisma generate",
-    "studio": "npx prisma studio"
+    "build": "prisma generate && prisma migrate deploy",
+    "postinstall": "prisma generate",
+    "migrate": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "generate": "prisma generate",
+    "studio": "prisma studio"
   },
   "keywords": [],
   "author": "",

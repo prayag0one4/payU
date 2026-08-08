@@ -15,9 +15,9 @@ const app = express();
 // Trust proxy (for rate limiter behind reverse proxy)
 app.set('trust proxy', 1);
 
-// CORS
+// CORS - allow all origins
 app.use(cors({
-    origin: process.env.FRONTEND_URL || '*',
+    origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
 }));

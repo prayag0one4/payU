@@ -3,7 +3,15 @@ const jwt = require('jsonwebtoken');
 const prisma = require('../config/prisma');
 const { AppError } = require('../middleware/errorHandler');
 
+const ensurePrisma = () => {
+    if (!prisma) {
+        throw new AppError('Database is not configured yet.', 503);
+    }
+};
+
 const register = async ({ name, email, password }) => {
+    ensurePrisma();
+
     // Check if email already exists
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) throw new AppError('Email already registered.', 409);
@@ -26,6 +34,8 @@ const register = async ({ name, email, password }) => {
 };
 
 const login = async ({ email, password }) => {
+    ensurePrisma();
+
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) throw new AppError('Invalid email or password.', 401);
 

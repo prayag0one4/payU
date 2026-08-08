@@ -1,12 +1,12 @@
-const { PrismaClient } = require('@prisma/client');
-
-if (!process.env.DATABASE_URL && process.env.payu_DATABASE_URL) {
-  process.env.DATABASE_URL = process.env.payu_DATABASE_URL;
-}
-
-let prisma;
+let prisma = null;
 
 try {
+  const { PrismaClient } = require('@prisma/client');
+
+  if (!process.env.DATABASE_URL && process.env.payu_DATABASE_URL) {
+    process.env.DATABASE_URL = process.env.payu_DATABASE_URL;
+  }
+
   prisma = new PrismaClient({
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
@@ -15,7 +15,6 @@ try {
     console.log('Database connected');
   }
 } catch (error) {
-  prisma = null;
   console.error('Database connection failed:', error.message);
 }
 

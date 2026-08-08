@@ -42,7 +42,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Health check
-app.get('/', (req, res) => res.json({ success: true, message: 'PayU API is running.' }));
+app.get('/', (req, res) => res.json({
+    success: true,
+    message: 'PayU API is running.',
+    db: process.env.DATABASE_URL || process.env.payu_DATABASE_URL ? 'Database connected' : 'Database not connected'
+}));
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
 // Routes

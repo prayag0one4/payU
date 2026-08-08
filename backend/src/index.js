@@ -59,9 +59,12 @@ app.use((req, res) => {
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-    console.log(`\n🚀 PayU Backend running at http://localhost:${PORT}`);
-    //console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}\n`);
-});
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`\n🚀 PayU Backend running at http://localhost:${PORT}`);
+        //console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}\n`);
+    });
+}
 
 module.exports = app;

@@ -5,7 +5,10 @@ const { AppError } = require('../middleware/errorHandler');
 
 const ensurePrisma = () => {
     if (!prisma) {
-        throw new AppError('Database is not configured yet.', 503);
+        const reason = process.env.DATABASE_URL || process.env.payu_DATABASE_URL
+            ? 'Prisma client could not be initialized.'
+            : 'Database URL is not configured.';
+        throw new AppError(`Database is not ready: ${reason}`, 503);
     }
 };
 

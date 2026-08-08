@@ -12,16 +12,19 @@ const transactionRoutes = require('./routes/transactionRoutes');
 
 const app = express();
 
+const corsOptions = {
+    origin: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    optionsSuccessStatus: 200,
+};
+
 // Trust proxy (for rate limiter behind reverse proxy)
 app.set('trust proxy', 1);
 
-// CORS - allow all origins
-app.use(cors({
-    origin: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true,
-}));
-app.set('trust proxy', true); // Trust first proxy for rate limiter
+// CORS - reflect any request origin
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 // Global rate limiter
 app.use(globalLimiter);
